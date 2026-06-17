@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1>Hello World</h1>
+  <input type="text" id="testInput" />
+  <input type="text" id="testInput2" class="mask-field" />
+  <p id="output"></p>
+  <p id="output2"></p>
+  <button id="testButton">Test Button</button>
+  <div id="testDiv"></div>
+
+  <script>
+    // Initialize LogRocket
+    // LogRocket.init('your-project-id');
+    
+
+    document.getElementById('testButton').addEventListener('click', () => {
+      document.getElementById('output').textContent = 'Button clicked';
+    });
+
+    document.getElementById('testInput').addEventListener('input', (e) => {
+      document.getElementById('output').textContent = e.target.value;
+    });
+
+    document.getElementById('testInput2').addEventListener('input', (e) => {
+      document.getElementById('output2').textContent = e.target.value;
+    });
+
+    Array.from({ length: 50 }, (_, i) => {
+      document.getElementById('testDiv').appendChild(document.createElement('p')).textContent = `Test Div${i + 1}`;
+    });
+
+  </script>
+  <script type="module">
+    import AnalyticsInit from './packages/core-analytics/index.js';
+    const analytics = new AnalyticsInit({
+      disableScrollTracking: true
+    });
+    analytics.init();
+  </script>
+
+
+</body>
+
+</html>
