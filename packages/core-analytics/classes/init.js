@@ -2,6 +2,7 @@ import { EventTracker } from "./eventTracker.js";
 import { IdentityManager } from "./identityManager.js";
 import { Sender } from "./sender.js";
 import { instrumentClick, instrumentInput, instrumentScroll, instrumentNavigation, instrumentErrors } from "../methods/analytics.utils.js";
+import { SessionRecorder } from "../../session-replay/index.js";
 
 class AnalyticsInit {
   constructor(config) {
@@ -31,6 +32,10 @@ class AnalyticsInit {
     this.config?.disableScrollTracking || instrumentScroll(sendBeacon);
     this.config?.disableNavigationTracking || instrumentNavigation(sendBeacon);
     this.config?.disableErrorTracking || instrumentErrors(sendBeacon);
+    if(this.config?.sessionReplay){
+      const SessionRecorderInstance = new SessionRecorder(this.sender);
+      SessionRecorderInstance.start();
+    }
 
     this.initialized = true;
     console.log('LogRocket analytics initialized');

@@ -21,5 +21,16 @@ LogRocket project repository.
 
 #### Network
 #### Session Replay
+  - Recorder logic
+  1. Capture screenshots
+  2. Capture mouse movements
+  3. Capture clicks
+  4. Capture typing
+  5. Capture navigation
+  6. Capture errors
+  7. Queue events
+
+  - Player logic
+
 
 #### Utils
