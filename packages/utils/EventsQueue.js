@@ -1,3 +1,6 @@
+import { generateUniqueId } from "./common.utils.js";
+import { APP_KEYS } from "./text.utils.js";
+
 class EventsQueue {
   constructor(identity, sender) {
     this.queue = [];
