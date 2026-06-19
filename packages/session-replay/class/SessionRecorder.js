@@ -16,8 +16,9 @@ class SessionRecorder {
 
     const mutationRemover = observeMutations(this.queue.push.bind(this.queue));
     const mouseMoveRemover = observeMouseMovement(this.queue.push.bind(this.queue));
+    const scrollRemover = observeScroll(this.queue.push.bind(this.queue));
 
-    this.stopQueue = [mutationRemover, mouseMoveRemover];
+    this.stopQueue = [mutationRemover, mouseMoveRemover, scrollRemover];
 
     this.timer = setInterval(() => this.queue.flush(), 5000);
 

@@ -16,12 +16,29 @@ class RecorderQueue {
     this.queue = [];
   }
 
+
+  // flush in batches
+  flushInBatches(size = 25) {
+    const flushQueue = () => {
+      const events = this.queue.splice(0, size); // flush events in one go
+      events.length && this.sender.send({
+        replayEvents: events
+      });
+      if (this.queue.length > 0) {
+        setTimeout(flushQueue, 0); // flush in batches
+      }
+    };
+    flushQueue();
+  }
+
+
   flush() {
-    const events = this.queue;
-    this.clear();
-    events.length && this.sender.send({
-      replayEvents: events
-    });
+    this.flushInBatches();
+    // const events = this.queue;
+    // this.clear();
+    // events.length && this.sender.send({
+    //   replayEvents: events
+    // });
   }
 }
 
