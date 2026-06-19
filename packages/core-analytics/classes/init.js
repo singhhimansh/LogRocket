@@ -1,8 +1,9 @@
 import { EventTracker } from "./eventTracker.js";
-import { IdentityManager } from "./identityManager.js";
+import { IdentityManager } from "../../utils/identityManager.js";
 import { Sender } from "./sender.js";
 import { instrumentClick, instrumentInput, instrumentScroll, instrumentNavigation, instrumentErrors } from "../methods/analytics.utils.js";
 import { SessionRecorder } from "../../session-replay/index.js";
+import EventsQueue from "../../utils/EventsQueue.js";
 
 class AnalyticsInit {
   constructor(config) {
@@ -11,6 +12,7 @@ class AnalyticsInit {
     this.sender = null;
     this.tracker = null;
     this.config = config;
+    this.eventsQueue = null;
   }
 
 
@@ -23,9 +25,12 @@ class AnalyticsInit {
 
     this.identity = new IdentityManager();
     this.sender = new Sender();
-    this.tracker = new EventTracker(this.identity, this.sender);
+    this.eventsQueue = new EventsQueue(this.identity, this.sender);
+    this.tracker = new EventTracker(this.sender, this.eventsQueue);
 
-    const sendBeacon = (e) => this.tracker.track(e.type, e.data);
+    const sendBeacon = (e) => {
+      this.eventsQueue.push(e);
+    };
 
     instrumentClick(sendBeacon);
     instrumentInput(sendBeacon);
@@ -33,9 +38,11 @@ class AnalyticsInit {
     this.config?.disableNavigationTracking || instrumentNavigation(sendBeacon);
     this.config?.disableErrorTracking || instrumentErrors(sendBeacon);
     if(this.config?.sessionReplay){
-      const SessionRecorderInstance = new SessionRecorder(this.sender);
+      const SessionRecorderInstance = new SessionRecorder(this.identity, this.sender);
       SessionRecorderInstance.start();
     }
+
+    this.eventsQueue.flush();
 
     this.initialized = true;
     console.log('LogRocket analytics initialized');

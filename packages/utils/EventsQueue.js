@@ -1,11 +1,21 @@
-class RecorderQueue {
-  constructor(sender) {
+class EventsQueue {
+  constructor(identity, sender) {
     this.queue = [];
     this.sender = sender;
+    this.identity = identity;
+  }
+
+  enrichEvent(event) {
+    return {
+      ...event,
+      timestamp: Date.now(),
+      eventId: generateUniqueId(APP_KEYS.PREFIX.EVENT),
+      ...this.identity.getContext()
+    };
   }
 
   push(event) {
-    this.queue.push(event);
+    this.queue.push(this.enrichEvent(event));
   }
 
   get() {
@@ -42,4 +52,4 @@ class RecorderQueue {
   }
 }
 
-export default RecorderQueue;
+export default EventsQueue;

@@ -1,7 +1,7 @@
 
 // identity/manager.js
 
-import { getDeviceId, getSessionId } from "../../utils/common.utils.js";
+import { getDeviceId, getSessionId } from "./common.utils.js";
 
 export class IdentityManager {
   constructor() {

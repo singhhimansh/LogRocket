@@ -27,7 +27,6 @@ export const observeMouseMovement = (record) =>{
     last = now;
     record({
       type: 'mouseMove',
-      timestamp: Date.now(),
       data: {
         x: event.clientX,
         y: event.clientY,
@@ -50,7 +49,6 @@ export const observeMutations = (record) =>{
     mutations.forEach((mutation) => {
       record({
         type: 'mutation',
-        timestamp: Date.now(),
         data: {
           mutationType: mutation.type,
           targetNode: mutation.target.outerHTML,

@@ -1,20 +1,14 @@
-import { generateUniqueId } from "../../utils/common.utils.js";
-import { APP_KEYS } from "../../utils/text.utils.js";
+import EventsQueue from "../../utils/EventsQueue.js";
 
 export class EventTracker {
-  constructor(identity, sender) {
-    this.identity = identity;
+  constructor(sender, eventsQueue) {
     this.sender = sender;
+    this.eventsQueue = eventsQueue;
   }
 
+
   track(eventName, data) {
-    const event = {
-      type: eventName,
-      eventId: generateUniqueId(APP_KEYS.PREFIX.EVENT),
-      data: data,
-      timestamp: Date.now(),
-      ...this.identity.getContext(),
-    };
+    const event = this.eventsQueue.enrichEvent(eventName, data);
     this.sender.send(event);
   }
 
