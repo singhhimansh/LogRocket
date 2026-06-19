@@ -2,10 +2,12 @@ import { generateUniqueId } from "./common.utils.js";
 import { APP_KEYS } from "./text.utils.js";
 
 class EventsQueue {
-  constructor(identity, sender) {
+  constructor(source, identity, sender) {
     this.queue = [];
     this.sender = sender;
     this.identity = identity;
+    this.timer = null;
+    this.source = source;
   }
 
   enrichEvent(event) {
@@ -35,7 +37,8 @@ class EventsQueue {
     const flushQueue = () => {
       const events = this.queue.splice(0, size); // flush events in one go
       events.length && this.sender.send({
-        replayEvents: events
+        replayEvents: events,
+        source: this.source
       });
       if (this.queue.length > 0) {
         setTimeout(flushQueue, 0); // flush in batches
@@ -45,13 +48,15 @@ class EventsQueue {
   }
 
 
-  flush() {
-    this.flushInBatches();
-    // const events = this.queue;
-    // this.clear();
-    // events.length && this.sender.send({
-    //   replayEvents: events
-    // });
+  startFlushing(delay = 5000) {
+    this.timer = setInterval(() => this.flushInBatches(), delay);
+  }
+  
+  stopFlushing() {
+    if (this.timer) {
+      clearInterval(this.timer);
+      this.timer = null;
+    }
   }
 }
 

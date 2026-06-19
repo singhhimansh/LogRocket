@@ -7,9 +7,9 @@ class SessionRecorder {
 
   constructor(identity, sender) {
     this.sender = sender;
-    this.queue = new EventsQueue(identity,sender);
+    this.queue = new EventsQueue("session-replay", identity, sender);
     this.stopQueue = [];
-    this.timer = null;
+    // this.timer = null;
     this.identity = identity;
   }
 
@@ -21,19 +21,14 @@ class SessionRecorder {
     const mutationRemover = observeMutations(record);
     const mouseMoveRemover = observeMouseMovement(record);
     // const scrollRemover = observeScroll(record);
-
-    this.stopQueue = [mutationRemover, mouseMoveRemover];
-
-    this.timer = setInterval(() => this.queue.flush(), 5000);
-
+    this.stopQueue = [mutationRemover,mouseMoveRemover];
+    this.queue.startFlushing();
   }
 
   stop() {
     this.stopQueue.forEach((stopCb) => stopCb());
-    this.timer && clearInterval(this.timer);
-
     // Flush any remaining events
-    this.queue.flush();
+    this.queue.stopFlushing();
   }
 
 }

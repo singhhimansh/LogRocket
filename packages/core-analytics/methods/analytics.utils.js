@@ -25,8 +25,7 @@ export function instrumentClick(report) {
     });
   }
   document.addEventListener(
-    "click", listener
-    ,
+    "click", listener,
     true // capture phase (critical)
   );
 

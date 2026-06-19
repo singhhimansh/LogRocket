@@ -25,7 +25,7 @@ class AnalyticsInit {
 
     this.identity = new IdentityManager();
     this.sender = new Sender();
-    this.eventsQueue = new EventsQueue(this.identity, this.sender);
+    this.eventsQueue = new EventsQueue("analytics", this.identity, this.sender);
     this.tracker = new EventTracker(this.sender, this.eventsQueue);
 
     const sendBeacon = (e) => {
@@ -42,7 +42,7 @@ class AnalyticsInit {
       SessionRecorderInstance.start();
     }
 
-    this.eventsQueue.flush();
+    this.eventsQueue.startFlushing();
 
     this.initialized = true;
     console.log('LogRocket analytics initialized');
