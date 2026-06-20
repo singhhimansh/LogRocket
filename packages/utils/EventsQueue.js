@@ -36,6 +36,7 @@ class EventsQueue {
   flushInBatches(size = 25) {
     const flushQueue = () => {
       const events = this.queue.splice(0, size); // flush events in one go
+      events?.sort((a, b) => a.timestamp - b.timestamp);
       events.length && this.sender.send({
         replayEvents: events,
         source: this.source

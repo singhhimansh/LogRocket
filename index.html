@@ -14,19 +14,14 @@
   <input type="text" id="testInput2" class="mask-field" />
   <p id="output"></p>
   <p id="output2"></p>
-  <button id="testButton">Test Button</button>
+  <button id="testButton2">Add identifer No</button>
+  <button id="testButton">Get Data</button>
   <div id="testDiv"></div>
-
-  <script src="./packages/storage/test.js" type="module"></script>
+  
+  <!-- <script src="./packages/storage/test.js" type="module"></script> -->
   <script>
     // Initialize LogRocket
-    // LogRocket.init('your-project-id');
-    
-
-    document.getElementById('testButton').addEventListener('click', () => {
-      document.getElementById('output').textContent = 'Button clicked';
-    });
-
+    // LogRocket.init('your-project-id'); 
     document.getElementById('testInput').addEventListener('input', (e) => {
       document.getElementById('output').textContent = e.target.value;
     });
@@ -46,7 +41,18 @@
       disableScrollTracking: true,
       sessionReplay: true
     });
-    analytics.init();
+    await analytics.init();
+
+
+    document.getElementById('testButton2').addEventListener('click', async () => {
+      // await analyticsInstance.identity(9084618246);
+    });
+    document.getElementById('testButton').addEventListener('click', async () => {
+
+      // document.getElementById('output').textContent = 'Button clicked';
+
+    });
+
   </script>
 
 
