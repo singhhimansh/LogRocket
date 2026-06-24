@@ -54,6 +54,7 @@ class AnalyticsInit {
     this.initialized = true;
     console.log('LogRocket analytics initialized');
 
+    return this;
   }
 
   identity(identifier) {

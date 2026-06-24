@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Document</title>
   <!-- <link rel="favicon" href="favicon.ico"> -->
 </head>
@@ -15,47 +15,62 @@
   <p id="output"></p>
   <p id="output2"></p>
   <button id="testButton2">Add identifer No</button>
-  <button id="testButton">Get Data</button>
+  <button id="play">Session Replay</button>
   <div id="testDiv"></div>
-  
+
+  <iframe id="player" style="
+       border:2px solid rgb(189, 78, 10);
+       border-radius: 8px;
+       background-color: #c4fffc;
+    
+        width:100%;
+        height:400px;
+      ">
+  </iframe>
+
   <!-- <script src="./packages/storage/test.js" type="module"></script> -->
   <script>
     // Initialize LogRocket
-    // LogRocket.init('your-project-id'); 
-    document.getElementById('testInput').addEventListener('input', (e) => {
-      document.getElementById('output').textContent = e.target.value;
+    // LogRocket.init('your-project-id');
+    document.getElementById("testInput").addEventListener("input", (e) => {
+      document.getElementById("output").textContent = e.target.value;
     });
 
-    document.getElementById('testInput2').addEventListener('input', (e) => {
-      document.getElementById('output2').textContent = e.target.value;
+    document.getElementById("testInput2").addEventListener("input", (e) => {
+      document.getElementById("output2").textContent = e.target.value;
     });
 
-    Array.from({ length: 50 }, (_, i) => {
-      document.getElementById('testDiv').appendChild(document.createElement('p')).textContent = `Test Div${i + 1}`;
+    Array.from({ length: 5 }, (_, i) => {
+      document
+        .getElementById("testDiv")
+        .appendChild(document.createElement("p")).textContent =
+        `Test Div${i + 1}`;
     });
-
   </script>
   <script type="module">
-    import AnalyticsInit from './packages/core-analytics/index.js';
+    import AnalyticsInit from "./packages/core-analytics/index.js";
+    import { SessionPlayer } from "./packages/session-replay/class/SessionPlayer.js";
     const analytics = new AnalyticsInit({
       disableScrollTracking: true,
-      sessionReplay: true
+      sessionReplay: true,
     });
-    await analytics.init();
+    const instance = await analytics.init();
+    console.log("instance", instance);
 
+    document
+      .getElementById("testButton2")
+      .addEventListener("click", async () => {
+        instance.identity(9084618246);
+      });
 
-    document.getElementById('testButton2').addEventListener('click', async () => {
-      // await analyticsInstance.identity(9084618246);
+    document.getElementById("play").addEventListener("click", async () => {
+      const page = await instance.eventsRepository.getByTime({ limit: 10000 });
+
+      // SessionPlayer handles everything — no need for separate Renderer
+      const player = new SessionPlayer(page.items);
+      await player.play();
     });
-    document.getElementById('testButton').addEventListener('click', async () => {
-
-      // document.getElementById('output').textContent = 'Button clicked';
-
-    });
-
   </script>
-
-
 </body>
 
 </html>

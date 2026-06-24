@@ -52,6 +52,7 @@ export const observeMutations = (record) =>{
         data: {
           mutationType: mutation.type,
           targetNode: mutation.target.outerHTML,
+          id: mutation.target.getAttribute('id'),
         }
       });
     });
