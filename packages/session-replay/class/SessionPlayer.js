@@ -1,3 +1,5 @@
+import { CursorImages, CursorTypes, getCursorNode } from "../cursors.js";
+
 export class SessionPlayer {
   constructor(events) {
     this.events = [...events].sort(
@@ -48,25 +50,13 @@ export class SessionPlayer {
     doc.close();
   }
 
-  createCursor() {
+ 
+
+
+  createCursor(type = CursorTypes.Classic) {
     if (!this.doc?.body) return;
 
-    const cursor = this.doc.createElement("div");
-    cursor.id = "__replay_cursor__";
-    Object.assign(cursor.style, {
-      position: "fixed",
-      width: "14px",
-      height: "14px",
-      background: "red",
-      border: "2px solid white",
-      boxShadow: "0 0 4px rgba(0,0,0,0.5)",
-      borderRadius: "50%",
-      pointerEvents: "none",
-      zIndex: "999999",
-      top: "0px",
-      left: "0px",
-      transition: "top 50ms linear, left 50ms linear",
-    });
+    let cursor = getCursorNode(type, this.doc);
     this.doc.body.appendChild(cursor);
     this.cursor = cursor;
   }
@@ -78,11 +68,11 @@ export class SessionPlayer {
 
   apply(event) {
     switch (event.type) {
-      case "click":      return this.applyClick(event);
-      case "input":      return this.applyInput(event);
-      case "mutation":   return this.applyMutation(event);
-      case "mouseMove":  return this.applyMouse(event);
-      case "scroll":     return this.applyScroll(event);
+      case "click": return this.applyClick(event);
+      case "input": return this.applyInput(event);
+      case "mutation": return this.applyMutation(event);
+      case "mouseMove": return this.applyMouse(event);
+      case "scroll": return this.applyScroll(event);
     }
   }
 
