@@ -1,11 +1,11 @@
 import { CursorImages, CursorTypes, getCursorNode } from "../cursors.js";
 
 export class SessionPlayer {
-  constructor(events) {
+  constructor(events, frameId = "sdk_player") {
     this.events = [...events].sort(
       (a, b) => a.timestamp - b.timestamp
     );
-    this.frame = document.getElementById("player");
+    this.frame = document.getElementById(frameId);
     this.cursor = null;
     this.timers = [];
   }
@@ -16,13 +16,15 @@ export class SessionPlayer {
 
   async play() {
     const snapshot = this.events.find((e) => e.type === "screenshot");
+
+    // first load snapshot
     if (snapshot) {
       this.renderSnapshot(snapshot.data.html);
       // Wait for iframe to finish parsing
       await new Promise((r) => setTimeout(r, 100));
     }
 
-    // Create cursor AFTER snapshot so it's inside the loaded iframe doc
+    // Create cursor after snapshot
     this.createCursor();
 
     const replayEvents = this.events.filter((e) => e.type !== "screenshot");
@@ -32,7 +34,7 @@ export class SessionPlayer {
 
     this.timers = replayEvents.map((event) =>
       setTimeout(
-        () => this.apply(event),
+        () => this.applyEvent(event),
         event.timestamp - start
       )
     );
@@ -56,17 +58,17 @@ export class SessionPlayer {
   createCursor(type = CursorTypes.Classic) {
     if (!this.doc?.body) return;
 
-    let cursor = getCursorNode(type, this.doc);
+    let cursor = getCursorNode.call(this, type);
     this.doc.body.appendChild(cursor);
     this.cursor = cursor;
   }
 
-  getElement(id) {
+  getElementById(id) {
     if (!id || !this.doc) return null;
     return this.doc.getElementById(id);
   }
 
-  apply(event) {
+  applyEvent(event) {
     switch (event.type) {
       case "click": return this.applyClick(event);
       case "input": return this.applyInput(event);
@@ -82,7 +84,7 @@ export class SessionPlayer {
     // No id = full body replacement (shouldn't happen post-snapshot, but guard)
     if (!id) return;
 
-    const el = this.getElement(id);
+    const el = this.getElementById(id);
     if (!el) return;
 
     if (mutationType === "childList" && targetNode) {
@@ -106,7 +108,7 @@ export class SessionPlayer {
   }
 
   applyInput(event) {
-    const el = this.getElement(event.data.id);
+    const el = this.getElementById(event.data.id);
     if (!el) return;
 
     // Masked fields: don't replay value
@@ -121,13 +123,10 @@ export class SessionPlayer {
   }
 
   applyClick(event) {
-    const { x, y, id } = event.data;
+    const { x, y, } = event.data;
 
-    // Visual ripple at click coordinates
+    // show ripple to indicate click
     this._showClickRipple(x, y);
-
-    // Don't actually .click() — that would re-trigger JS in the iframe
-    // Just show the visual indicator
   }
 
   applyScroll(event) {

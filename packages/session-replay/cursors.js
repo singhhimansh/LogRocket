@@ -5,8 +5,8 @@ export const CursorImages = {
 
 
 
-function classicCursor(doc) {
-  const cursor = doc.createElement("img");
+function classicCursor() {
+  const cursor = this.doc.createElement("img");
   cursor.src = CursorImages.ClassicCursor;
   cursor.id = "__replay_cursor__";
   Object.assign(cursor.style, {
@@ -21,8 +21,8 @@ function classicCursor(doc) {
   return cursor;
 }
 
-function dotCursor(doc) {
-  const cursor = doc.createElement("div");
+function dotCursor() {
+  const cursor = this.doc.createElement("div");
   cursor.id = "__replay_cursor__";
   Object.assign(cursor.style, {
     position: "fixed",
@@ -46,11 +46,11 @@ export const CursorTypes = {
   Dot: "dot"
 };
 
-export const getCursorNode = (type, doc) => {
+export function getCursorNode (type) {
   if (type === CursorTypes.Classic) {
-    return classicCursor(doc);
+    return classicCursor.call(this);
   } else {
-    return dotCursor(doc);
+    return dotCursor.call(this);
   }
 }
 
