@@ -92,9 +92,9 @@ export class SessionPlayer {
       // Using outerHTML replacement can lose the reference, so use a template
       const tpl = this.doc.createElement("template");
       tpl.innerHTML = targetNode;
-      const newEl = tpl.content.firstElementChild;
+      const newEl = tpl.content.firstElementChild; // template element's document fragment's first element i.e targetNode
       if (newEl) {
-        el.replaceWith(newEl);
+        el.replaceWith(newEl);  // replaceWith method keep the reference of el, hence needed for further mutations
       }
     }
 
