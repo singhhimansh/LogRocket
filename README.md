@@ -26,11 +26,16 @@ LogRocket project repository.
   2. Capture mouse movements
   3. Capture clicks
   4. Capture typing
+
+  later
   5. Capture navigation
   6. Capture errors
-  7. Queue events
+
 
   - Player logic
+
+
+#### Make the player in portal modal if possible in JS
 
 
 #### Utils

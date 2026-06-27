@@ -45,6 +45,40 @@ export class SessionPlayer {
     this.timers = [];
   }
 
+  pause() {
+  this.timers.forEach(clearTimeout);
+  this.timers = [];
+}
+
+  setSpeed(newSpeed) {
+    this.pause();
+    this.speed = newSpeed;
+    // re-schedule remaining events from current position
+    const now = Date.now();
+    const remaining = this.events.filter(
+      e => e.timestamp - this.startTime > this.elapsed
+    );
+    this.timers = remaining.map(event => {
+      const delay = (event.timestamp - this.startTime - this.elapsed) / newSpeed;
+      return setTimeout(() => this.renderer.applyEvent(event), delay);
+    });
+  }
+
+  seekTo(ms) {
+    this.pause();
+    this.elapsed = ms;
+    // replay all events up to this point instantly to get correct DOM state
+    const snapshot = this.events.find(e => e.type === "screenshot");
+    if (snapshot) this.renderSnapshot(snapshot.data.html);
+
+    this.events
+      .filter(e => e.timestamp - this.startTime <= ms && e.type !== "screenshot")
+      .forEach(e => this.apply(e));
+
+    // then schedule the rest
+    this.play(this.speed);
+  }
+
   renderSnapshot(html) {
     const doc = this.frame.contentDocument;
     doc.open();

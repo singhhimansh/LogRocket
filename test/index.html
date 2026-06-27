@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recorded UI</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+
+
+  <h2 class="sr-only">Session recording test form — interactive with live event log</h2>
+
+  <div class="sr-wrap">
+    <div class="sr-hero">
+      <div class="sr-badge"><span class="rec-dot"></span>Session recording active</div>
+      <h1>User registration</h1>
+      <p>All interactions are tracked for analytics and replay</p>
+    </div>
+
+    <div class="sr-metrics">
+      <div class="sr-metric"><span class="sr-metric-val" id="evt-count">0</span><span class="sr-metric-lbl">Events
+          captured</span></div>
+      <div class="sr-metric"><span class="sr-metric-val" id="field-count">0</span><span class="sr-metric-lbl">Fields
+          filled</span></div>
+      <div class="sr-metric"><span class="sr-metric-val" id="time-elapsed">0s</span><span class="sr-metric-lbl">Session
+          time</span></div>
+    </div>
+
+    <div class="sr-body">
+
+      <div class="sr-section">
+        <div class="sr-section-title"><i class="ti ti-user" aria-hidden="true"></i>Personal info</div>
+        <div class="field">
+          <label for="sr-name"><i class="ti ti-user" aria-hidden="true"></i>Full name</label>
+          <div class="field-inner"><i class="ti ti-user fi" aria-hidden="true"></i><input type="text" id="sr-name"
+              name="name" placeholder="Jane Smith" autocomplete="name" /></div>
+        </div>
+        <div class="field">
+          <label for="sr-email"><i class="ti ti-mail" aria-hidden="true"></i>Email address</label>
+          <div class="field-inner"><i class="ti ti-mail fi" aria-hidden="true"></i><input type="email" id="sr-email"
+              name="email" placeholder="jane@example.com" autocomplete="email" /></div>
+        </div>
+        <div class="field">
+          <label for="sr-password"><i class="ti ti-lock" aria-hidden="true"></i>Password</label>
+          <div class="field-inner"><i class="ti ti-lock fi" aria-hidden="true"></i><input type="password"
+              id="sr-password" name="password" placeholder="At least 8 characters" autocomplete="new-password" /></div>
+        </div>
+      </div>
+
+      <div class="sr-section">
+        <div class="sr-section-title"><i class="ti ti-adjustments-horizontal" aria-hidden="true"></i>Preferences</div>
+        <div class="field">
+          <label>Gender</label>
+          <div class="radio-grid">
+            <label class="radio-pill"><input type="radio" name="gender" value="male" />Male</label>
+            <label class="radio-pill"><input type="radio" name="gender" value="female" />Female</label>
+            <label class="radio-pill"><input type="radio" name="gender" value="other" />Other</label>
+          </div>
+        </div>
+        <div class="field" style="margin-top:.75rem">
+          <label>Hobbies</label>
+          <div class="check-grid">
+            <label class="check-pill"><input type="checkbox" name="hobbies" value="reading" />Reading</label>
+            <label class="check-pill"><input type="checkbox" name="hobbies" value="playing" />Playing</label>
+            <label class="check-pill"><input type="checkbox" name="hobbies" value="coding" />Coding</label>
+          </div>
+        </div>
+        <div class="field" style="margin-top:.75rem">
+          <label for="sr-country"><i class="ti ti-map-pin" aria-hidden="true"></i>Country</label>
+          <div class="field-inner"><i class="ti ti-map-pin fi" aria-hidden="true"></i>
+            <select id="sr-country" name="country">
+              <option value="">Select a country</option>
+              <option value="usa">United States</option>
+              <option value="india">India</option>
+              <option value="uk">United Kingdom</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="sr-section">
+        <div class="sr-section-title"><i class="ti ti-writing" aria-hidden="true"></i>About you</div>
+        <div class="field">
+          <label for="sr-about"><i class="ti ti-pencil" aria-hidden="true"></i>Short bio</label>
+          <div class="field-inner"><i class="ti ti-pencil fi" aria-hidden="true"></i><textarea id="sr-about"
+              name="about" placeholder="Tell us a little about yourself…"></textarea></div>
+        </div>
+      </div>
+
+      <div class="sr-section">
+        <div class="sr-section-title"><i class="ti ti-photo" aria-hidden="true"></i>Brand asset</div>
+        <div class="sr-image-wrap">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" alt="Analytics dashboard" />
+          <div class="sr-image-overlay"><span class="sr-image-label"><i class="ti ti-chart-line" style="font-size:14px"
+                aria-hidden="true"></i>Session analytics preview</span></div>
+        </div>
+      </div>
+
+      <button class="sr-submit" id="sr-submit-btn" type="button">Create account</button>
+
+      <div style="margin-top:1.25rem">
+        <div
+          style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:8px;display:flex;align-items:center;gap:6px;">
+          <i class="ti ti-activity" aria-hidden="true" style="font-size:13px"></i>Live event stream
+        </div>
+        <div class="sr-events" id="event-log">
+          <div class="sr-event visible"><i class="ti ti-player-play" aria-hidden="true"></i><span>Session
+              started</span><span class="sr-event-time">0:00</span></div>
+        </div>
+      </div>
+
+      <div class="toast-wrap">
+        <div class="toast" id="toast"><i class="ti ti-check" aria-hidden="true"></i><span>Account created</span></div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="script.js" type="module"></script>
+
+</body>
+
+</html>
