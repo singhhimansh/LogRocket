@@ -1,6 +1,6 @@
-import { SessionPlayer } from "../../packages/session-replay/class/SessionPlayer.js";
-import { EventsRepository } from "../../packages/storage/EventsRepository.js";
-import { IndexedDB } from "../../packages/storage/IndexedDB.js";
+import { SessionPlayer } from "../../session-replay/class/SessionPlayer.js";
+import { EventsRepository } from "../../storage/EventsRepository.js";
+import { IndexedDB } from "../../storage/IndexedDB.js";
 
 // const playBtn = document.getElementById("play");
 

@@ -1,14 +1,37 @@
 {
-  "name": "logrocket",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "keywords": [],
   "author": "Himanshu Singh",
   "license": "ISC",
-  "private": true,
+  "name": "logrocket",
+  "version": "1.0.0",
+  "description": "LogRocket session replay & analytics",
+  "type": "module",
+  "private": false,
+  "files": [
+    "dist"
+  ],
+  "exports": {
+
+    "./analytics": {
+      "import": "./dist/analytics.js",
+      "require": "./dist/analytics.cjs"
+    },
+    "./session-replay": {
+      "import": "./dist/session-replay.js",
+      "require": "./dist/session-replay.cjs"
+    },
+    "./player": {
+      "import": "./dist/player.js",
+      "require": "./dist/player.cjs"
+    },
+    "./player/style.css": "./dist/player.css"
+  },
+  "scripts": {
+    "build": "vite build",
+    "prepublishOnly": "pnpm build"
+  },
+  "devDependencies": {
+    "vite": "^5.4.21"
+  },
   "packageManager": "pnpm@10.30.2"
 }
