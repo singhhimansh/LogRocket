@@ -47,7 +47,7 @@ export function instrumentInput(report) {
     const target = event.target;
     const isMasked = target.classList.contains('mask-field');
 
-    if (!(target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement)) {
+    if (!(target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target instanceof HTMLSelectElement)) {
       return;
     }
 
@@ -83,7 +83,6 @@ export function instrumentInput(report) {
 
   return () => document.removeEventListener("input", listener, true);
 }
-
 
 export function instrumentScroll(report) {
   let lastY = 0;
