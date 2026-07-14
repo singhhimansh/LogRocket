@@ -1,4 +1,4 @@
-import getUniqueSelector from "../../utils/querySelector.utils";
+import getUniqueSelector from "../../utils/querySelector.utils.js";
 
 function inlineLocalStyles() {
   const rules = [];

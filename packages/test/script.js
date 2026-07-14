@@ -1,5 +1,5 @@
-import AnalyticsInit from "../packages/core-analytics/index.js";
-import { SessionPlayer } from "../packages/session-replay/class/SessionPlayer.js";
+import AnalyticsInit from "../core-analytics/index.js";
+// import { SessionPlayer } from "../session-replay/class/SessionPlayer.js";
 
 const analytics = new AnalyticsInit({
   disableScrollTracking: true,

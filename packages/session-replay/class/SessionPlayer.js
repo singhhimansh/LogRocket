@@ -118,7 +118,7 @@ export class SessionPlayer {
     // No id = full body replacement (shouldn't happen post-snapshot, but guard)
     if (!selector) return;
 
-    const el = this.querySelector(selector);
+    const el = this.getElementBySelector(selector);
     if (!el) return;
 
     if (mutationType === "childList" && targetNode) {
@@ -142,7 +142,7 @@ export class SessionPlayer {
   }
 
   applyInput(event) {
-    const el = this.querySelector(event.data.selector);
+    const el = this.getElementBySelector(event.data.selector);
     if (!el) return;
 
     // Masked fields: don't replay value
