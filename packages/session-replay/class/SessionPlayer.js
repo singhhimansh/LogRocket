@@ -8,6 +8,8 @@ export class SessionPlayer {
     this.frame = document.getElementById(frameId);
     this.cursor = null;
     this.timers = [];
+
+    this.frame.style.pointerEvents = "none"; 
   }
 
   get doc() {
@@ -164,7 +166,11 @@ export class SessionPlayer {
   }
 
   applyScroll(event) {
-    this.frame.contentWindow?.scrollTo(event.data.x, event.data.y);
+    this.frame.contentWindow?.scrollTo({
+      left: event.data.x,
+      top: event.data.y,
+      behavior: "smooth"
+    });
   }
 
   applyMouse(event) {

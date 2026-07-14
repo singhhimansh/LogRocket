@@ -98,20 +98,6 @@ export const captureScreenshot = () => {
   };
 };
 
-// /**
-//  * Captures a screenshot of the current page
-//  * @returns {Object} Screenshot data
-//  */
-// export const captureScreenshot = () => {
-//   return {
-//     type: 'screenshot',
-//     timestamp: Date.now(),
-//     data: {
-//       html: document.documentElement.outerHTML,
-//     }
-//   }
-// }
-
 
 /**
  * Observes mouse movement and records it
