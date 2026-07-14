@@ -1,3 +1,4 @@
+import getUniqueSelector from "../../utils/querySelector.utils";
 
 function inlineLocalStyles() {
   const rules = [];
@@ -150,6 +151,7 @@ export const observeMutations = (record) =>{
         data: {
           mutationType: mutation.type,
           targetNode: mutation.target.outerHTML,
+          selector: getUniqueSelector(mutation.target),
           id: mutation.target.getAttribute('id'),
         }
       });

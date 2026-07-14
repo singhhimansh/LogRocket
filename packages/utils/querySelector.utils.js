@@ -90,21 +90,3 @@ const getUniqueSelector = (target) => {
 
 
 export default getUniqueSelector;
-
-// document.addEventListener(
-//   "click",
-//   (event) => {
-//     event.preventDefault();
-//     event.stopPropagation();
-//     const uniqueSelector = getUniqueSelector(event.target);
-//     if (uniqueSelector) {
-//       console.log("Unique:", uniqueSelector);
-//       console.log("Elements:", document.querySelectorAll(uniqueSelector)?.[0]);
-//       console.log("\n");
-//       console.log("\n");
-//     } else {
-//       console.log("No unique");
-//     }
-//   },
-//   { capture: true },
-// );

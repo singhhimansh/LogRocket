@@ -97,9 +97,9 @@ export class SessionPlayer {
     this.cursor = cursor;
   }
 
-  getElementById(id) {
-    if (!id || !this.doc) return null;
-    return this.doc.getElementById(id);
+  getElementBySelector(selector) {
+    if (!selector || !this.doc) return null;
+    return this.doc.querySelector(selector);
   }
 
   applyEvent(event) {
@@ -113,12 +113,12 @@ export class SessionPlayer {
   }
 
   applyMutation(event) {
-    const { id, targetNode, mutationType } = event.data;
+    const { id, targetNode, mutationType, selector } = event.data;
 
     // No id = full body replacement (shouldn't happen post-snapshot, but guard)
-    if (!id) return;
+    if (!selector) return;
 
-    const el = this.getElementById(id);
+    const el = this.querySelector(selector);
     if (!el) return;
 
     if (mutationType === "childList" && targetNode) {
@@ -142,7 +142,7 @@ export class SessionPlayer {
   }
 
   applyInput(event) {
-    const el = this.getElementById(event.data.id);
+    const el = this.querySelector(event.data.selector);
     if (!el) return;
 
     // Masked fields: don't replay value

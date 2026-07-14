@@ -1,6 +1,7 @@
 // import { generateUniqueId } from "@logrocket/utils/common.utils";
 
 import { debounced, generateUniqueId, getDeviceId, getSessionId } from "../../utils/common.utils.js";
+import getUniqueSelector from "../../utils/querySelector.utils.js";
 
 const ALLOWED_TAGS = new Set(['BUTTON', 'INPUT', 'TEXTAREA', 'A', 'SELECT', 'OPTION', 'CHECKBOX', 'RADIO']);
 
@@ -16,6 +17,7 @@ export function instrumentClick(report) {
       type: "click",
       data: {
         tag: target.tagName,
+        selector: getUniqueSelector(target),
         id: target.id || null,
         class: target.className || null,
         text: target.innerText?.slice(0, 100),
@@ -57,6 +59,7 @@ export function instrumentInput(report) {
       tag: target.tagName,
       inputType: target.type,
       name: target.name || null,
+      selector: getUniqueSelector(target),
       id: target.id || null,
       class: target.className || null,
       x: event.clientX,
