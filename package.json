@@ -20,11 +20,10 @@
       "import": "./dist/session-replay.js",
       "require": "./dist/session-replay.cjs"
     },
-    "./player": {
-      "import": "./dist/player.js",
-      "require": "./dist/player.cjs"
-    },
-    "./player/style.css": "./dist/player.css"
+    "./session-replay-viewer": {
+      "import": "./dist/session-replay-viewer.js",
+      "require": "./dist/session-replay-viewer.cjs"
+    }
   },
   "scripts": {
     "build": "vite build",

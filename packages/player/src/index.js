@@ -1,2 +1,4 @@
 // packages/player/src/index.js
-export { SessionReplayViewer } from "../components/SessionReplayViewer.js";
+import { SessionReplayViewer } from "../components/SessionReplayViewer.js";
+
+export default SessionReplayViewer;

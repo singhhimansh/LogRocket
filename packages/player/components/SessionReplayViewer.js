@@ -1,16 +1,12 @@
-// import { init as initialisePlayer } from "./player.js";
-const STYLES = new URL("./player.css", import.meta.url)?.href;
-
-
 import { PlayerController } from "./PlayerController.js";
-
-const STYLES_URL = STYLES;
+const STYLES_URL = new URL("./player.css", import.meta.url)?.href;
+const TABLER_ICON_CDN = "https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css";
 
 const playerHtml = `
 <div class="player-wrapper">
   <div class="toolbar">
     <div class="session-meta">
-      <span class="label">Session</span>
+      <span class="label" id="session-title">Session</span>
       <span class="value" id="session-id">—</span>
     </div>
 
@@ -67,18 +63,19 @@ export class SessionReplayViewer {
     this.container = container;
     this.options = options;
 
-    this._injectStyles();
-    this._mount();             
-    this._collectRefs();       
-    this._controller = new PlayerController(this._els, options); 
+    this._injectStyles('sp-styles', STYLES_URL);
+    this._injectStyles('sp-icons', TABLER_ICON_CDN);
+    this._mount();
+    this._collectRefs();
+    this._controller = new PlayerController(this._els, options);
   }
 
-  _injectStyles() {
-    if (document.getElementById("sp-styles")) return;
+  _injectStyles(id, url) {
+    if (document.getElementById(id)) return;
     const link = document.createElement("link");
-    link.id = "sp-styles";
+    link.id = id;
     link.rel = "stylesheet";
-    link.href = STYLES_URL;
+    link.href = url;
     document.head.appendChild(link);
   }
 
@@ -104,6 +101,7 @@ export class SessionReplayViewer {
       statusText: q("#status-text"),
       eventCount: q("#event-count"),
       sessionId: q("#session-id"),
+      sessionTitle: q("#session-title"),
       overlay: q("#overlay"),
       iframe: q("#player"),
       playIcon: playBtn.querySelector("i"),
@@ -121,5 +119,6 @@ export class SessionReplayViewer {
     this._controller.pause();
     this.container.innerHTML = "";
     document.getElementById("sp-styles")?.remove();
+    document.getElementById("sp-icons")?.remove();
   }
 }
