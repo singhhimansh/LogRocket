@@ -1,3 +1,9 @@
+export const STORE_NAMES = {
+  ANALYTICS_EVENTS: "AnalyticsEvents",
+  USER_IDENTITY: "UserIdentity",
+
+}
+
 export const STORE = [
   {
     name: "AnalyticsEvents",
@@ -18,6 +24,18 @@ export const STORE = [
           "type",
           "timestamp",
         ],
+      },
+    ],
+  },
+  {
+    name: "UserIdentity",
+    key: "sessionId",
+    indexes: [
+      {
+        name:
+          "userId",
+
+        keyPath: 'userId',
       },
     ],
   },

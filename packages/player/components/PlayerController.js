@@ -1,6 +1,7 @@
 import { SessionPlayer } from "../../session-replay/class/SessionPlayer.js";
-import { EventsRepository } from "../../storage/EventsRepository.js";
+import Repository  from "../../storage/Repository.js";
 import { IndexedDB } from "../../storage/IndexedDB.js";
+import { STORE_NAMES } from "../../storage/stores.js";
 
 export class PlayerController {
   constructor(els, options = {}) {
@@ -35,7 +36,7 @@ export class PlayerController {
       const db = new IndexedDB(this.options.dbName, this.options.dbVersion);
       await db.connect();
 
-      const repo = new EventsRepository(db);
+      const repo = new Repository(db, STORE_NAMES.ANALYTICS_EVENTS);
       const page = await repo.getByTime({ limit: this.options.limit });
       this._events = page.items;
 

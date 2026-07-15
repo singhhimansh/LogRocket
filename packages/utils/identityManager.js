@@ -8,10 +8,16 @@ export class IdentityManager {
     this.deviceId = getDeviceId();
     this.sessionId = getSessionId();
     this.userId = null;
+    this.userParameters = {};
   }
 
   identify(userId) {
     this.userId = userId;
+  }
+
+  userParameter(key, value) {
+    if(!key) return;
+    this.userParameters[key] = value;
   }
 
   getContext() {

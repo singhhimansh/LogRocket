@@ -6,6 +6,11 @@ const analytics = new AnalyticsInit({
 });
 const instance = await analytics.init();
 
+analytics.identifier("9000000000");
+analytics.userParameter("email", "himanshu@gmail.com");
+analytics.userParameter("age", "24");
+analytics.userParameter("gender", "male");
+
 
 let evtCount = 0,
   fieldsFilled = new Set(),
