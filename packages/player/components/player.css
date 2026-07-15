@@ -8,6 +8,8 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  border: 1px solid rgb(190, 190, 190);
+  border-radius: 8px;
   padding: 1rem;
   gap: 12px;
 } 
@@ -149,6 +151,28 @@
   opacity: 0;
   pointer-events: none;
 }
+
+.overlay-shadow {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  transition: opacity 0.2s;
+  opacity: 0;
+
+}
+
+.iframe-wrapper:hover .overlay-shadow {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.10);
+  /* Dark gray overlay */
+  pointer-events: auto;
+
+}
+
 
 .overlay-icon {
   width: 48px;

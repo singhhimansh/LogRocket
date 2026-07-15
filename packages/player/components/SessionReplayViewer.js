@@ -45,6 +45,7 @@ const playerHtml = `
       </div>
       <span class="overlay-text">Press play to start the session replay</span>
     </div>
+    <div class="overlay-shadow" id="overlay-shadow">
   </div>
 
   <div class="status-bar">
