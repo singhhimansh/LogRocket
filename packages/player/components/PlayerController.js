@@ -37,6 +37,7 @@ export class PlayerController {
       await db.connect();
 
       const repo = new Repository(db, STORE_NAMES.ANALYTICS_EVENTS);
+      const userRepo = new Repository(db, STORE_NAMES.USER_IDENTITY);
       const page = await repo.getByTime({ limit: this.options.limit });
       this._events = page.items;
 
@@ -50,7 +51,26 @@ export class PlayerController {
       this._duration = end - start;
 
       const snap = this._events.find((e) => e.type === "screenshot");
-      this._els.sessionId.textContent = snap?.sessionId?.slice(0, 12) ?? "—";
+      const currentDeviceId = snap?.deviceId;
+      const sessions = await userRepo.getAll();
+
+      // get userId from multiple sessions where ever it is found
+      let userId = null;
+      for(let s of sessions){
+        if(s.deviceId === currentDeviceId && s.userId){
+          userId = s.userId;
+          break;
+        }
+      }
+
+      if(userId){
+        this._els.sessionTitle.textContent = "User";
+        this._els.sessionId.textContent = userId;
+      }else{
+        this._els.sessionTitle.textContent = "Session";
+        this._els.sessionId.textContent = snap?.sessionId?.slice(0, 12) ?? "—";
+      }
+
       this._els.timeTotal.textContent = this._fmt(this._duration);
       this._els.eventCount.textContent = `${this._events.length} events`;
 

@@ -63,7 +63,7 @@ class AnalyticsInit {
     if (this.identity.userId) return;
     const existingIdentity = await this.userIdentityRepo.get(this.identity.sessionId);
     if (existingIdentity) return;
-    await this.userIdentityRepo.put({ sessionId: this.identity.sessionId, userId: this.identity.userId });
+    await this.userIdentityRepo.put({ sessionId: this.identity.sessionId, deviceId: this.identity.deviceId, userId: this.identity.userId });
   }
 
   async loadUserParameters(key, value) {
@@ -73,6 +73,7 @@ class AnalyticsInit {
       const data = {
         sessionId: this.identity.sessionId,
         userId: this.identity.userId,
+        deviceId: this.identity.deviceId,
         userParameters: {
           ...existingIdentity.userParameters,
           [key]: value,
@@ -84,6 +85,7 @@ class AnalyticsInit {
       await this.userIdentityRepo.put({ 
         sessionId: this.identity.sessionId, 
         userId: this.identity.userId, 
+        deviceId: this.identity.deviceId,
         userParameters: { [key]: value } });
     }
   }

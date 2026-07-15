@@ -34,8 +34,12 @@ export const STORE = [
       {
         name:
           "userId",
-
         keyPath: 'userId',
+      },
+      {
+        name:
+          "deviceId",
+        keyPath: 'deviceId',
       },
     ],
   },
