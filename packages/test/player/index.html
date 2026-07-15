@@ -6,58 +6,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Session replay</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-  <!-- <link rel="stylesheet" href="../style.css" media="all" /> -->
-  <link rel="stylesheet" href="./player.css" media="all" />
 </head>
 
 <body>
 
-  <div class="toolbar">
-    <div class="session-meta">
-      <span class="label">Session</span>
-      <span class="value" id="session-id">—</span>
-    </div>
-
-    <select class="speed-select" id="speed">
-      <option value="0.5">0.5×</option>
-      <option value="1" selected>1×</option>
-      <option value="2">2×</option>
-      <option value="4">4×</option>
-    </select>
-
-    <button class="ctrl-btn" id="restart-btn" aria-label="Restart">
-      <i class="ti ti-rotate-clockwise" style="font-size:16px"></i>
-    </button>
-    <button class="ctrl-btn primary" id="play-btn" aria-label="Play">
-      <i class="ti ti-player-play" style="font-size:18px"></i>
-    </button>
+  <div id="player" style="height: 90vh;">
   </div>
+</body>
 
-  <div class="timeline-row">
-    <span class="time-label" id="time-current">0:00</span>
-    <div class="timeline-track" id="timeline">
-      <div class="timeline-fill" id="timeline-fill"></div>
-    </div>
-    <span class="time-label" id="time-total" style="text-align:right">0:00</span>
-  </div>
 
-  <div class="iframe-wrapper">
-    <iframe id="player" title="Session replay"></iframe>
-    <div class="overlay" id="overlay">
-      <div class="overlay-icon">
-        <i class="ti ti-player-play"></i>
-      </div>
-      <span class="overlay-text">Press play to start the session replay</span>
-    </div>
-  </div>
+<script type="module">
+  import { SessionReplayViewer } from "../../player/components/SessionReplayViewer.js";
 
-  <div class="status-bar">
-    <div class="status-dot" id="status-dot"></div>
-    <span class="status-text" id="status-text">Ready</span>
-    <span class="event-count" id="event-count"></span>
-  </div>
+  const viewer = new SessionReplayViewer(document.getElementById("player"),
+    { dbName: "Logrocket", dbVersion: 2, limit: 10000 });
 
-  <script type="module" src="./player.js"></script>
+</script>
 </body>
 
 </html>

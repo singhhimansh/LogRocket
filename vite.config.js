@@ -9,7 +9,7 @@ export default defineConfig({
         // index: resolve(__dirname, "packages/index.js"), // optional barrel
         analytics: resolve(__dirname, "packages/core-analytics/src/index.js"),
         "session-replay": resolve(__dirname, "packages/session-replay/src/index.js"),
-        player: resolve(__dirname, "packages/player/src/index.js"),
+        "session-replay-viewer": resolve(__dirname, "packages/player/src/index.js"),
       },
       formats: ["es", "cjs"],
       fileName: (format, entryName) =>
